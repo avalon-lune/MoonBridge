@@ -1,0 +1,17 @@
+{
+  "kirikiri_z": {
+    "version": "1.4.0.8",
+    "release": "https://github.com/krkrz/krkrz/releases/tag/1.4.0r2",
+    "download": "https://github.com/krkrz/krkrz/releases/download/1.4.0r2/krkrz_20171225r2.7z",
+    "sha256": "a58da24a2e14eac102f0fd8bf66106b22ad238d17a317b8d44b65d68efb574df",
+    "bytes": 4330388,
+    "optional": true,
+    "role": "Windows x86 game engine running under the same Wine backend",
+    "bootstrap": "scripts/compatibility/bootstrap-kirikiri-z.py"
+  },
+  "paper_magician": {
+    "recipe": "scripts/compatibility/repair-paper-magician.py",
+    "scope": "one hash-matched game package; original game and translation resources are not distributed",
+    "hashes_checked_before_build": true
+  }
+}

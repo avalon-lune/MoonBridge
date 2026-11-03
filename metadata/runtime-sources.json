@@ -1,0 +1,24 @@
+[
+  {
+    "name": "wine",
+    "url": "https://github.com/Gcenx/macOS_Wine_builds/releases/download/11.0_1/wine-stable-11.0_1-osx64.tar.xz",
+    "sha256": "b50dc50ec7f41d58b115a6b685d4d1315ba3c797bd3aa0f49213f2703cb82388",
+    "verified": true,
+    "downloaded_at": "2026-11-03T15:32:53+0800"
+  },
+  {
+    "name": "7zip",
+    "url": "https://github.com/ip7z/7zip/releases/download/26.05/7z2605-mac.tar.xz",
+    "sha256": "12ef6830317743cfd3f0ab1724bde43fcc270d8b6d8564f8c12c2a2b7f993570",
+    "verified": true,
+    "downloaded_at": "2026-11-03T15:32:58+0800"
+  },
+  {
+    "name": "gstreamer",
+    "version": "1.28.6",
+    "url": "https://gstreamer.freedesktop.org/data/pkg/osx/1.28.6/gstreamer-1.0-1.28.6-universal.pkg",
+    "sha256": "a8eb366c59b7e9e5dc049848fed6bcd203a8878aa7517c051639fda78797c6ad",
+    "verified": true,
+    "installation": "project-local payload extraction; installer scripts not executed"
+  }
+]

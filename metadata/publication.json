@@ -1,0 +1,28 @@
+{
+  "version": "0.1.1",
+  "prepared_at": "2026-11-03T21:37:35.997935+08:00",
+  "repository": "https://github.com/avalon-lune/MoonBridge",
+  "visibility": "public",
+  "included": "software source, original UI assets, probe sources and fixtures, build/runtime bootstrap scripts, documentation and genuine GUI screenshots",
+  "excluded": "commercial game resources, translation packages, personal saves, game library, prefixes, local diagnostic logs, downloaded runtimes and build outputs",
+  "validation": {
+    "release_build": "passed",
+    "core_and_runtime_checks": 32,
+    "windows_x86_probe_exit": 37,
+    "windows_x64_probe_exit": 37,
+    "prefix_relocation_checks": "passed",
+    "optional_kirikiri_z_fresh_restore": "passed",
+    "optional_kirikiri_z_existing_restore": "passed",
+    "screenshots": "three genuine native UI captures from an isolated demo instance using self-generated fixtures",
+    "temporary_directory_alias": "known test-path limitation; canonical home-directory path validated"
+  },
+  "host": {
+    "chip": "Apple M5",
+    "memory_gb": 24,
+    "macos": "27.0.1",
+    "swift": "6.4"
+  },
+  "runtime_binaries_in_git": false,
+  "game_assets_in_git": false,
+  "saves_in_git": false
+}
