@@ -1,0 +1,11 @@
+# MoonBridge artwork
+
+Generated with the built-in imagegen tool on 2026-11-03; the tool does not expose a model selector. Saved asset: Resources/Art/spring-bridge.png. The application bundle contains a copy. The source generated image remains in the Codex generated-images directory; the project does not reference that external path.
+
+## Final generation prompt
+
+Use case: stylized-concept. Asset type: finished illustrated hero banner for MoonBridge, a native macOS visual novel launcher. Create a premium polished Japanese anime / visual novel key visual, very wide landscape composition approximately 3:1. Palette is airy pale powder blue, blush pink, soft lilac, warm white. Scene: an ethereal seaside pedestrian bridge in spring, luminous pale blue sky, a few drifting cherry blossom petals and delicate sparkling starlight, distant sea and soft clouds. On the RIGHT TWO THIRDS are three wholesome adult young women (all age 18+) wearing modest classic Japanese sailor-style school uniforms with navy collars, white long sleeves, pastel blue or pink neck ribbons and navy pleated skirts. Main heroine in the right foreground has beautiful very long straight black hair with bangs, gentle blue-gray eyes and a small friendly smile, one hand holding a pale pink book against her chest. Behind her: a cheerful short light brown bob-haired friend with a blush-pink ribbon, and a serene silver-haired friend with a powder-blue ribbon. Elegant detailed faces, natural hands, tasteful flowing hair, contemporary high-quality anime illustration, delicate controlled linework and soft painterly lighting. LEFT THIRD is mostly bright clean sky and soft blue-white haze, low detail with ample calm negative space for app text drawn separately in real UI. Characters should occupy the right side fully without covering the left text area. No UI mockup, no panels, no frames, no letters, no logos, no text, no watermark. Beautiful composition with clear depth and lovely pastel visual richness; wholesome nonsexual character artwork.
+
+## UI direction
+
+Actual text, buttons, cards, sidebar and state are native SwiftUI. The banner composition reserves its left side for real interface text. Palette and original vector app icon are implemented in Design.swift and scripts/make-icon.swift. No commercial game artwork or existing character franchise is bundled.
