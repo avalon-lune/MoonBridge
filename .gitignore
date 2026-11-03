@@ -1,0 +1,33 @@
+# Local runtime, personal games, saves, caches and builds
+/Runtime
+/Library
+/MoonBridge.app
+/build/
+/.build/
+/.swiftpm/
+.DS_Store
+__pycache__/
+*.pyc
+
+# Local-only test sessions and machine records
+/tests/work-*/
+/tests/results/
+/tests/compatibility/
+/metadata/*
+!/metadata/runtime-sources.json
+!/metadata/compatibility-sources.json
+!/metadata/publication.json
+
+# Personal migration receipts / original local repair notes
+/docs/MIGRATION.md
+/docs/纸上的魔法使兼容修复.txt
+/docs/纸上的魔法使修复过程与运行架构.md
+
+# Never publish imported game assets or save files
+*.xp3
+*.ksd
+*.kep
+.env
+.env.*
+*.pem
+*.key
