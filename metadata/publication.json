@@ -1,20 +1,30 @@
 {
-  "version": "0.1.1",
-  "prepared_at": "2026-11-03T21:37:35.997935+08:00",
+  "version": "0.2.1",
+  "prepared_at": "2026-11-16T22:51:00.661477+08:00",
   "repository": "https://github.com/avalon-lune/MoonBridge",
   "visibility": "public",
-  "included": "software source, original UI assets, probe sources and fixtures, build/runtime bootstrap scripts, documentation and genuine GUI screenshots",
-  "excluded": "commercial game resources, translation packages, personal saves, game library, prefixes, local diagnostic logs, downloaded runtimes and build outputs",
+  "included": "software source, pastel watercolor UI assets, character persona, shared local memory implementation, optional AI API integration, test fixtures, build/runtime bootstrap scripts, documentation and GUI screenshots",
+  "excluded": "API keys, credentials, local AI settings, personal conversations and memory databases, commercial game resources and translation packages, personal saves, game library, Wine prefixes, diagnostic logs, downloaded runtimes and build outputs",
   "validation": {
-    "release_build": "passed",
-    "core_and_runtime_checks": 32,
-    "windows_x86_probe_exit": 37,
-    "windows_x64_probe_exit": 37,
-    "prefix_relocation_checks": "passed",
-    "optional_kirikiri_z_fresh_restore": "passed",
-    "optional_kirikiri_z_existing_restore": "passed",
-    "screenshots": "three genuine native UI captures from an isolated demo instance using self-generated fixtures",
-    "temporary_directory_alias": "known test-path limitation; canonical home-directory path validated"
+    "release_build": "passed again from isolated publication source on 2026-11-16",
+    "legacy_core_and_runtime_checks": {
+      "count": 32,
+      "verified_on": "2026-11-11",
+      "windows_x86_probe_exit": 37,
+      "windows_x64_probe_exit": 37
+    },
+    "companion_checks": {
+      "passed": 16,
+      "verified_on": "2026-11-16",
+      "network_or_keychain_mutations": false
+    },
+    "memory_checks": {
+      "passed": 12,
+      "verified_on": "2026-11-16",
+      "network_or_keychain_mutations": false
+    },
+    "live_api_and_cross_game_memory": "passed on 2026-11-11; private credentials and conversations excluded",
+    "screenshots": "current v0.2.1 library capture plus earlier UI demonstrations; no save files or chat contents included"
   },
   "host": {
     "chip": "Apple M5",
@@ -24,5 +34,7 @@
   },
   "runtime_binaries_in_git": false,
   "game_assets_in_git": false,
-  "saves_in_git": false
+  "saves_in_git": false,
+  "api_keys_in_git": false,
+  "personal_memory_in_git": false
 }
