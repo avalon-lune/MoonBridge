@@ -14,7 +14,7 @@ struct ImportSheet: View {
     @StateObject private var fields = SheetFields()
     var body: some View {
         VStack(alignment: .leading, spacing: 23) {
-            HStack { SectionTitle(eyebrow: "A NEW STORY", title: "带一个故事过来", subtitle: "原始游戏包会保留，我们会导入一份独立副本。"); Spacer(); Image(systemName: "folder.badge.plus").font(.system(size: 36, weight: .ultraLight)).foregroundStyle(Palette.blue) }
+            HStack { SectionTitle(eyebrow: "IMPORT", title: "导入游戏", subtitle: "原始游戏包会保留，我们会导入一份独立副本。"); Spacer(); Image(systemName: "folder.badge.plus").font(.system(size: 36, weight: .ultraLight)).foregroundStyle(Palette.blue) }
             VStack(alignment: .leading, spacing: 9) {
                 ForEach(model.importSources, id: \.path) { url in
                     HStack { Image(systemName: url.hasDirectoryPath ? "folder" : "doc.zipper").foregroundStyle(Palette.blue); Text(url.lastPathComponent).font(.system(size: 12, weight: .medium)).lineLimit(2); Spacer() }.padding(12).background(Palette.wash, in: RoundedRectangle(cornerRadius: 10))
@@ -27,7 +27,7 @@ struct ImportSheet: View {
                 Text("如果解压后的日文或中文文件名乱码，可重新导入并切换文件名编码。密码仅用于本次解压，不会保存。").font(.system(size: 10)).lineSpacing(4).foregroundStyle(Palette.muted)
             }.font(.system(size: 12))
             HStack(alignment: .top, spacing: 9) { Image(systemName: "sparkles").foregroundStyle(Palette.pink); Text("若游戏包内另附汉化压缩包，导入后可在游戏详情中选择“附带压缩包”，先备份再应用。补丁需要原版游戏文件。").font(.system(size: 11)).lineSpacing(4).foregroundStyle(Palette.muted) }.padding(15).background(Palette.pink.opacity(0.06), in: RoundedRectangle(cornerRadius: 12))
-            HStack { Button("取消") { dismiss() }.buttonStyle(SoftStyle()); Spacer(); Button { model.beginImport(options: ImportOptions(password: fields.password, filenameCodePage: fields.codePage)) } label: { Label("导入这个故事", systemImage: "arrow.down.to.line") }.buttonStyle(PrimaryStyle()).keyboardShortcut(.defaultAction) }
+            HStack { Button("取消") { dismiss() }.buttonStyle(SoftStyle()); Spacer(); Button { model.beginImport(options: ImportOptions(password: fields.password, filenameCodePage: fields.codePage)) } label: { Label("导入游戏", systemImage: "arrow.down.to.line") }.buttonStyle(PrimaryStyle()).keyboardShortcut(.defaultAction) }
         }.padding(30).frame(width: 580).background(Color.white)
     }
 }
@@ -44,20 +44,20 @@ struct GameDetailView: View {
             if let game = model.game(gameID) {
                 HStack(spacing: 0) {
                     VStack(alignment: .leading, spacing: 19) {
-                        ArtView(cover: game.coverPath, alignment: .trailing).frame(height: 310).clipShape(RoundedRectangle(cornerRadius: 14))
+                        GameCoverArtwork(cover: game.coverPath ?? model.companion.metadata[game.id]?.coverPath, title: game.title, gameID: game.id).frame(height: 310).clipShape(RoundedRectangle(cornerRadius: 14))
                         HStack { Tag(text: game.selected?.architecture ?? "待选择程序"); Spacer() }
                         Text(game.engine).font(.system(size: 13, weight: .semibold))
                         Text(ByteCountFormatter.string(fromByteCount: game.sizeBytes, countStyle: .file) + "  ·  " + game.importedAt.formatted(date: .abbreviated, time: .omitted)).font(.system(size: 10)).foregroundStyle(Palette.muted)
                         Button { model.chooseCover(for: game) } label: { Label("更换封面", systemImage: "photo") }.buttonStyle(SoftStyle())
                         Spacer()
-                        Text("YOUR NEXT CHAPTER").tracking(1.7).font(.system(size: 8, weight: .semibold)).foregroundStyle(Palette.blue)
-                        Text(model.running.contains(gameID) ? model.status : "故事可以慢慢读，\n喜欢可以留很久。").font(.system(size: 15, weight: .light)).lineSpacing(7).foregroundStyle(Palette.ink.opacity(0.7))
+                        Text("LOCAL GAME").tracking(1.7).font(.system(size: 8, weight: .semibold)).foregroundStyle(Palette.blue)
+                        Text(model.running.contains(gameID) ? model.status : "运行配置仅用于当前游戏。").font(.system(size: 15, weight: .light)).lineSpacing(7).foregroundStyle(Palette.ink.opacity(0.7))
                     }.padding(25).frame(width: 272).background(LinearGradient(colors: [Palette.blue.opacity(0.09), Palette.pink.opacity(0.07)], startPoint: .topLeading, endPoint: .bottomTrailing))
                     VStack(alignment: .leading, spacing: 0) {
                         HStack {
                             VStack(alignment: .leading, spacing: 8) {
-                                Text("STORY SETTINGS").tracking(1.8).font(.system(size: 9, weight: .semibold)).foregroundStyle(Palette.blue)
-                                TextField("故事名称", text: field(\.title)).textFieldStyle(.plain).font(.system(size: 23, weight: .bold))
+                                Text("运行设置").tracking(1.8).font(.system(size: 9, weight: .semibold)).foregroundStyle(Palette.blue)
+                                TextField("游戏名称", text: field(\.title)).textFieldStyle(.plain).font(.system(size: 23, weight: .bold))
                             }
                             Spacer()
                             Button { dismiss() } label: { Image(systemName: "xmark").font(.system(size: 12)).foregroundStyle(Palette.muted).frame(width: 27, height: 27).background(Palette.wash, in: Circle()) }.buttonStyle(.plain).keyboardShortcut(.cancelAction)
@@ -121,7 +121,7 @@ struct GameDetailView: View {
                             Menu { Button("打开 Windows 配置") { model.wineConfiguration(game) }; Button("打开备份文件夹") { let path = model.paths.root.appendingPathComponent("Library/Backups"); model.reveal(path) } } label: { Image(systemName: "ellipsis").frame(width: 16, height: 17) }.menuStyle(.borderlessButton).frame(width: 28)
                             Spacer()
                             if model.running.contains(game.id) { Button { model.stop(game) } label: { Label("停止运行", systemImage: "stop.fill") }.buttonStyle(SoftStyle(pink: true)) }
-                            else { Button { model.launch(game) } label: { Label(game.selected?.isInstaller == true ? "运行安装程序" : "开始这个故事", systemImage: "play.fill") }.buttonStyle(PrimaryStyle()).disabled(model.operation || game.selectedExecutable.isEmpty) }
+                            else { Button { model.launch(game) } label: { Label(game.selected?.isInstaller == true ? "运行安装程序" : "开始游戏", systemImage: "play.fill") }.buttonStyle(PrimaryStyle()).disabled(model.operation || game.selectedExecutable.isEmpty) }
                         }
                     }.padding(28).frame(maxWidth: .infinity)
                 }.frame(width: 925, height: 715).background(.white).foregroundStyle(Palette.ink)
@@ -138,7 +138,7 @@ struct PatchSheet: View {
     @StateObject private var fields = SheetFields()
     var body: some View {
         VStack(alignment: .leading, spacing: 22) {
-            SectionTitle(eyebrow: "A LITTLE TRANSLATION MAGIC", title: "让故事说熟悉的语言", subtitle: "应用独立汉化包，原文件会先备份。")
+            SectionTitle(eyebrow: "PATCH", title: "应用汉化补丁", subtitle: "应用独立汉化包，原文件会先备份。")
             VStack(alignment: .leading, spacing: 12) {
                 Text("补丁：" + (model.patchSource?.lastPathComponent ?? "")).font(.system(size: 12, weight: .semibold))
                 if let id = model.patchGameID, let game = model.game(id) {

@@ -5,7 +5,7 @@ struct RuntimeView: View {
     @EnvironmentObject var model: AppModel
     var body: some View {
         VStack(alignment: .leading, spacing: 25) {
-            HStack { SectionTitle(eyebrow: "BEHIND EVERY STORY", title: "准备好，去另一个世界", subtitle: "检查本地运行组件，每款游戏的设置彼此独立。"); Spacer(); Button("重新检查") { model.checkRuntime() }.buttonStyle(SoftStyle()) }
+            HStack { SectionTitle(eyebrow: "RUNTIME", title: "运行环境", subtitle: "检查本地运行组件，每款游戏的设置彼此独立。"); Spacer(); Button("重新检查") { model.checkRuntime() }.buttonStyle(SoftStyle()) }
             HStack(spacing: 16) {
                 statusCard("Windows 运行内核", value: model.runtime.wineVersion, icon: "shippingbox", ready: model.runtime.wineReady)
                 statusCard("指令翻译", value: "Apple Rosetta", icon: "cpu", ready: model.runtime.rosettaReady)
@@ -48,9 +48,9 @@ struct ActivityView: View {
     @EnvironmentObject var model: AppModel
     var body: some View {
         VStack(alignment: .leading, spacing: 25) {
-            HStack { SectionTitle(eyebrow: "LITTLE FOOTPRINTS", title: "故事经过的地方", subtitle: "查看启动记录，给偶尔的小故障留一点线索。"); Spacer(); Button("导出诊断") { model.exportDiagnostics() }.buttonStyle(SoftStyle()) }
+            HStack { SectionTitle(eyebrow: "ACTIVITY", title: "运行记录", subtitle: "最近启动的游戏、退出状态与本次操作记录。"); Spacer(); Button("导出诊断") { model.exportDiagnostics() }.buttonStyle(SoftStyle()) }
             if model.document.games.isEmpty {
-                Card { VStack(spacing: 15) { Image(systemName: "clock.badge.questionmark").font(.system(size: 38, weight: .ultraLight)).foregroundStyle(Palette.blue); Text("第一段足迹，还在等你。").font(.system(size: 15, weight: .medium)); Text("导入并启动游戏后，这里会留下它的运行记录。").font(.system(size: 11)).foregroundStyle(Palette.muted); Button("导入游戏") { model.chooseGame() }.buttonStyle(PrimaryStyle()) }.frame(maxWidth: .infinity).padding(40) }
+                Card { VStack(spacing: 15) { Image(systemName: "clock.badge.questionmark").font(.system(size: 38, weight: .ultraLight)).foregroundStyle(Palette.blue); Text("暂无运行记录").font(.system(size: 15, weight: .medium)); Text("导入并启动游戏后，这里会留下它的运行记录。").font(.system(size: 11)).foregroundStyle(Palette.muted); Button("导入游戏") { model.chooseGame() }.buttonStyle(PrimaryStyle()) }.frame(maxWidth: .infinity).padding(40) }
             }
             ForEach(model.document.games.sorted { ($0.lastPlayedAt ?? $0.importedAt) > ($1.lastPlayedAt ?? $1.importedAt) }) { game in
                 Card { HStack(spacing: 17) { Image(systemName: "book.closed").font(.system(size: 25, weight: .light)).foregroundStyle(Palette.blue); VStack(alignment: .leading, spacing: 7) { Text(game.title).font(.system(size: 13, weight: .semibold)); Text(game.lastResult + (game.lastPlayedAt.map { "  ·  " + $0.formatted(date: .abbreviated, time: .shortened) } ?? "")).font(.system(size: 10)).foregroundStyle(Palette.muted) }; Spacer(); Button("运行日志") { model.showLog(for: game) }.buttonStyle(SoftStyle()); Button("游戏设置") { model.detailID = game.id }.buttonStyle(SoftStyle()) } }
@@ -63,8 +63,7 @@ struct GuideView: View {
     @EnvironmentObject var model: AppModel
     var body: some View {
         VStack(alignment: .leading, spacing: 24) {
-            SectionTitle(eyebrow: "BEFORE THE FIRST CHAPTER", title: "故事开始之前", subtitle: "从导入到第一次存档，一步一步就好。")
-            HeroBanner()
+            SectionTitle(eyebrow: "GUIDE", title: "使用指南", subtitle: "导入、运行设置与存读档验证。")
             guide("01", "导入完整游戏", "选择 ZIP、7Z、RAR 或完整文件夹。单独的 EXE 往往还需要同目录的图片、声音和脚本。压缩包有密码时，在导入窗口填写。", icon: "tray.and.arrow.down", tint: Palette.blue)
             guide("02", "应用汉化补丁", "已经汉化的游戏可以直接尝试运行。另附补丁压缩包时，在游戏详情中选择并应用；覆盖的原文件会保存在备份目录。补丁有特殊安装步骤时，请先阅读随包说明。", icon: "character.book.closed", tint: Palette.pink)
             guide("03", "选择主程序与区域", "优先选择游戏本体或汉化启动器。首次运行会创建独立环境，可能需要稍等。若只有 setup.exe，请先运行安装，再点击“重新扫描”。日文原版通常使用日文区域；汉化版按说明选择。", icon: "slider.horizontal.3", tint: Palette.blue)

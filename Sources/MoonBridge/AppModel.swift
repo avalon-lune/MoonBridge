@@ -4,12 +4,14 @@ import UniformTypeIdentifiers
 import MoonBridgeCore
 
 @MainActor final class AppModel: ObservableObject {
-    enum Section: String, CaseIterable { case library = "游戏收藏室", runtime = "运行环境", activity = "运行记录", guide = "使用指南" }
+    enum Section: String, CaseIterable { case library = "游戏库", runtime = "运行环境", activity = "运行记录", guide = "使用指南", settings = "AI 设置" }
     let paths: ProjectPaths
+    let companion: CompanionModel
     @Published var document = LibraryDocument()
     @Published var section: Section = .library
     @Published var query = ""
-    @Published var status = "准备好迎接下一段故事"
+    @Published var status = "就绪"
+    @Published var libraryReadOnly = false
     @Published var runtime = RuntimeReport()
     @Published var operation = false
     @Published var running: Set<UUID> = []
@@ -35,10 +37,12 @@ import MoonBridgeCore
         if let i = args.firstIndex(of: "--root"), args.count > i + 1 { paths = ProjectPaths(root: URL(fileURLWithPath: args[i + 1])) }
         else if let root = ProcessInfo.processInfo.environment["MOONBRIDGE_ROOT"] { paths = ProjectPaths(root: URL(fileURLWithPath: root)) }
         else { paths = ProjectPaths(root: Bundle.main.bundleURL.deletingLastPathComponent()) }
+        companion = CompanionModel(paths: paths)
         do { try paths.makeDirectories(); document = try LibraryDocument.load(from: paths) }
-        catch { self.error = "游戏库读取失败，原始记录已保留：\n" + error.localizedDescription }
+        catch { libraryReadOnly = true; self.error = "游戏库读取失败，原始记录已保留。为保护数据，本次不会写入游戏库。\n" + error.localizedDescription }
+        companion.loadGames(document.games)
     }
-    func save() { do { try document.save(to: paths) } catch { self.error = "无法保存游戏库：" + error.localizedDescription } }
+    func save() { guard !libraryReadOnly else { error = "游戏库处于只读保护状态，请先恢复有效的索引后重新打开月渡。"; return }; do { try document.save(to: paths) } catch { self.error = "无法保存游戏库：" + error.localizedDescription } }
     func update(_ game: Game) { if let index = document.games.firstIndex(where: { $0.id == game.id }) { document.games[index] = game; save() } }
     func game(_ id: UUID) -> Game? { document.games.first { $0.id == id } }
     func record(_ text: String) { status = text; events.insert(Date().formatted(date: .omitted, time: .standard) + "  " + text, at: 0) }
@@ -60,7 +64,7 @@ import MoonBridgeCore
         }
     }
     func acceptImport(_ urls: [URL]) {
-        guard !operation, !urls.isEmpty else { return }
+        guard !operation, !urls.isEmpty, !libraryReadOnly else { return }
         importSources = urls; showImport = true
     }
     func handleDrop(_ providers: [NSItemProvider]) -> Bool {
@@ -78,7 +82,7 @@ import MoonBridgeCore
         return true
     }
     func beginImport(options: ImportOptions) {
-        guard !operation else { return }
+        guard !operation, !libraryReadOnly else { return }
         let sources = importSources; let service = importer
         showImport = false; operation = true; section = .library
         Task {
@@ -89,6 +93,8 @@ import MoonBridgeCore
                         try service.importGame(from: source, options: options) { message in Task { @MainActor in self.status = message } }
                     }.value
                     document.games.append(value); save(); detailID = value.id
+                    companion.loadGames([value])
+                    if companion.settings.enabled && companion.settings.autoLookup { companion.presentLookup(for: value) }
                     record("已导入「" + value.title + "」")
                 } catch { self.error = error.localizedDescription; record("导入未完成：" + source.lastPathComponent) }
             }

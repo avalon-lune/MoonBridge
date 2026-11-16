@@ -23,12 +23,13 @@ import MoonBridgeCore
 @main struct MoonBridgeApp: App {
     @NSApplicationDelegateAdaptor(AppDelegate.self) var delegate
     @StateObject private var model = AppModel()
+    init() { CompanionBootstrap.handleCommandLineIfNeeded() }
     var body: some Scene {
         WindowGroup("MoonBridge · 月渡", id: "main") {
-            RootView().environmentObject(model)
+            RootView().environmentObject(model).environmentObject(model.companion)
                 .frame(minWidth: 1100, minHeight: 760)
                 .preferredColorScheme(.light)
-                .task { delegate.model = model; model.checkRuntime() }
+                .task { delegate.model = model; model.checkRuntime(); model.companion.refreshCredentialStatus() }
                 .onOpenURL { url in model.acceptImport([url]) }
         }
         .windowStyle(.hiddenTitleBar)
