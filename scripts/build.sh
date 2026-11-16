@@ -10,6 +10,10 @@ MB_APP="$MB_ROOT/MoonBridge.app"
 mkdir -p "$MB_APP/Contents/MacOS" "$MB_APP/Contents/Resources/Art"
 cp "$MB_ROOT/build/swift/release/MoonBridge" "$MB_APP/Contents/MacOS/MoonBridge"
 cp "$MB_ROOT/Resources/Art/"*.png "$MB_APP/Contents/Resources/Art/"
+if [ -d "$MB_ROOT/Resources/Persona" ]; then
+    mkdir -p "$MB_APP/Contents/Resources/Persona"
+    cp "$MB_ROOT/Resources/Persona/"* "$MB_APP/Contents/Resources/Persona/"
+fi
 cp "$MB_ROOT/Resources/Info.plist" "$MB_APP/Contents/Info.plist"
 if [ -f "$MB_ROOT/Resources/MoonBridge.icns" ]; then cp "$MB_ROOT/Resources/MoonBridge.icns" "$MB_APP/Contents/Resources/"; fi
 xattr -dr com.apple.FinderInfo "$MB_APP" 2>/dev/null || true
