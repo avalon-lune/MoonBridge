@@ -5,9 +5,12 @@ let package = Package(
     platforms: [.macOS(.v14)],
     products: [.executable(name: "MoonBridge", targets: ["MoonBridge"])],
     targets: [
-        .target(name: "MoonBridgeCore"),
+        .systemLibrary(name: "CSQLite"),
+        .target(name: "MoonBridgeCore", dependencies: ["CSQLite"]),
         .executableTarget(name: "MoonBridge", dependencies: ["MoonBridgeCore"]),
-        .executableTarget(name: "MoonBridgeCheck", dependencies: ["MoonBridgeCore"], path: "tests/Check")
+        .executableTarget(name: "MoonBridgeCheck", dependencies: ["MoonBridgeCore"], path: "tests/Check"),
+        .executableTarget(name: "MoonBridgeCompanionCheck", dependencies: ["MoonBridgeCore"], path: "tests/Companion"),
+        .executableTarget(name: "MoonBridgeMemoryCheck", dependencies: ["MoonBridgeCore"], path: "tests/Memory")
     ],
     swiftLanguageVersions: [.v5]
 )
