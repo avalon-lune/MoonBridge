@@ -1,3 +1,9 @@
+# 0.2.1 acceptance update — 2026-11-11
+
+Current verification: **60 checks passed** (32 legacy/runtime, 16 companion, 12 memory). Live API model listing, sourced replies and cross-game memory recall passed. Final game/prefix preservation and SQLite integrity results are recorded in `metadata/v021-validation.json`. See [acceptance guide](ACCEPTANCE_V021.md). Normal and zoomed layouts were visually inspected; the last GUI restart was skipped because macOS was locked.
+
+---
+
 # 验证记录 / 2026-11-03
 
 本页区分源码检查、实际 Windows 程序执行与用户游玩确认。没有宣称通用兼容率。
@@ -46,3 +52,7 @@ bash scripts/build.sh
 ```
 
 测试只使用新建的 `tests/work-*`。源码仓库不包含测试过程中生成的 Windows 前缀、私人日志和商业游戏存档。
+
+## 2026-11-16 公开同步前复核
+
+从隔离的公开文件集重新执行 release 构建与本地 ad-hoc 签名，通过；Companion 16/16、共享记忆 12/12 检查通过。这两组检查不调用网络、不修改钥匙串、使用独立测试数据。此次同步没有再次运行用户游戏或实时 AI 测试，游戏兼容与真实 API 验证仍以上述 2026-11-11 记录为准。

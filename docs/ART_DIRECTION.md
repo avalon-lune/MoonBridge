@@ -1,4 +1,6 @@
-# MoonBridge artwork
+# MoonBridge artwork — 0.1 historical asset
+
+This page records the original 0.1 illustration retained as `spring-bridge.png`; it does not describe the current library artwork. The 0.2.1 watercolor theme and character adaptations are documented in [the current visual prompts](ART_V021_PROMPTS.md), [Chisa avatar notes](CHISA_AVATAR_PROMPT.md) and [third-party rights notices](../THIRD_PARTY.md).
 
 Generated with the built-in imagegen tool on 2026-11-03; the tool does not expose a model selector. Saved asset: Resources/Art/spring-bridge.png. The application bundle contains a copy. The source generated image remains in the Codex generated-images directory; the project does not reference that external path.
 
@@ -8,4 +10,4 @@ Use case: stylized-concept. Asset type: finished illustrated hero banner for Moo
 
 ## UI direction
 
-Actual text, buttons, cards, sidebar and state are native SwiftUI. The banner composition reserves its left side for real interface text. Palette and original vector app icon are implemented in Design.swift and scripts/make-icon.swift. No commercial game artwork or existing character franchise is bundled.
+Actual text, buttons, cards, sidebar and state are native SwiftUI. The 0.1 banner composition reserved its left side for real interface text. Palette and the original vector app icon are implemented in Design.swift and scripts/make-icon.swift. The original 0.1 illustration used project-created characters; the current 0.2.1 artwork also includes the themed character adaptations listed in the third-party notices above.

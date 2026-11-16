@@ -1,4 +1,4 @@
-# 运行架构 / 0.1.1
+# 运行架构 / 0.2.0
 
 MoonBridge 是原生 SwiftUI 启动器，管理游戏副本、运行配置与验证记录。它不把任意 Windows EXE 转换成 macOS ARM 原生程序。
 
@@ -50,3 +50,7 @@ KiriKiri Z 专项修复另见 [迁移记录](compatibility/PAPER_MAGICIAN.md)。
 App、Runtime 和 Library 位于同一根目录。源代码、下载缓存和构建产物均可保存在项目内；Rosetta 与开发者工具属于系统组件。独立前缀不是安全沙箱，Windows 程序仍以当前用户权限执行。
 
 本版本没有通用 DRM 绕过、通用引擎替换、全部视频修复、云存档或后台上传服务。字体使用 macOS 本地替代，不分发微软字体。游戏兼容结论应以真实画面、音频、视频和存读档测试为准。
+
+## 可选资料与 AI 层
+
+`CompanionModel` 与 `AppModel` 分别管理资料和游戏运行。`CompanionStore` 只写 `Library/Companion`，不改变旧 Game 模型和 library.json 版本。`GameCatalog` 对接 VNDB / Bangumi，用户确认候选后缓存实际封面。`LocalMemoryStore` 使用系统 SQLite，所有游戏共用聊天与长期事项，事务迁移旧记录并保留原文件。角色指令从打包的 Persona 文件读取，资料与记忆作为低优先级参考。`AIClient` 使用 Responses API，限制输入与输出，返回文本和可点击来源。`KeychainCredential` 按规范化 API 地址隔离密钥，网络请求不跟随重定向。具体操作与联网范围见 [资料与 AI 助手](COMPANION.md)。

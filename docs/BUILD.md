@@ -38,9 +38,13 @@ python3 scripts/make-fixtures.py
 bash scripts/build.sh
 ./build/swift/release/MoonBridgeCheck "$PWD"
 ./build/swift/release/MoonBridgeCheck "$PWD" --runtime
+./build/swift/release/MoonBridgeCompanionCheck
+./build/swift/release/MoonBridgeMemoryCheck
 ```
 
 基础检查也需要 7-Zip。`--runtime` 增加真实 Win32 / Win64 执行；使用独立 `tests/work-*`，不会拿用户游戏库做试验。测试结果包含工作目录，写在本地忽略文件中。测试期间请不要手动删除它正在使用的前缀。
+
+Companion 与 Memory 检查分别覆盖 API 请求边界、配置保存，以及共享长期记忆的持久化、迁移和检索；它们使用隔离临时数据，不调用真实 AI API，也不读取用户游戏与聊天库。
 
 ## 可选的 KiriKiri Z 组件
 
@@ -56,6 +60,6 @@ python3 scripts/compatibility/bootstrap-kirikiri-z.py
 
 ## 仓库内容
 
-源码、原创素材、自检源码与生成包、构建和运行库恢复脚本均随仓库提供。Wine / GStreamer 等下载载荷、构建产物、用户游戏与存档不放入 Git，避免将个人内容和大型二进制混入源代码历史。运行库可按固定来源恢复；个人存档应自行保留，不能从源码仓库恢复。
+源码、主题插画与图标、自检源码与生成包、构建和运行库恢复脚本均随仓库提供。素材的角色权利与许可边界见 [第三方说明](../THIRD_PARTY.md)。Wine / GStreamer 等下载载荷、构建产物、用户游戏与存档不放入 Git，避免将个人内容和大型二进制混入源代码历史。运行库可按固定来源恢复；个人存档应自行保留，不能从源码仓库恢复。
 
 已知测试路径限制：自检入口在 `/private/tmp` 与 `/tmp` 别名混用时出现过路径不一致，未列为通过组合。请使用家目录中的实际目录；本次发布验证在本机 Local Games 下的独立构建副本运行。

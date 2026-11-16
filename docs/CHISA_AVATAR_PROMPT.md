@@ -1,0 +1,9 @@
+# 千咲头像制作记录
+
+使用内置 image_gen 工具，官方千咲单人透明立绘作为形象参考；不是自行编造的新角色外貌。项目素材：`Resources/Art/chisa-avatar.png`。透明背景保持原生成输出，未用脚本改画。
+
+参考：[官方立绘](https://wutheringwaves.kurogames.com/static4.0/assets/qianxiao-2d1286a8.webp)。
+
+## 最终提示词
+
+Use case: stylized-concept. Asset type: a single hand-drawn chibi dango head-and-shoulders avatar for the macOS app MoonBridge. The provided image is the OFFICIAL identity reference for Chisa (千咲) from Wuthering Waves. Transform this exact character into a charming compact hand-drawn chibi portrait, preserve her identifiable official appearance rather than inventing an alternate character. Keep long straight jet-black hair with straight bangs, crimson-red eyes, the thin red ribbon bow on her right side (viewer LEFT) with long red ribbon tails, charcoal-black uniform, large WHITE sailor collar edged with double BLACK lines, red necktie, thin black choker with tiny pink-red detail. These are identity constraints. Crop modestly at upper chest, no weapon, no legs, no extra accessories. Very large round head, small shoulders, cute dango proportions; slightly reserved and mildly tsundere expression, a tiny closed-mouth pout and subtle blush, composed and gentle rather than hostile. Delicate pencil-like contours and softly layered watercolor/gouache coloring, refined hand-painted anime illustration, clear at 48px and 64px, red eyes should remain legible. Center the face with ample safe circular-crop margin around hair, bow and head; avoid cutting off top or ribbons. One character, front-facing with a slight three-quarter turn. Soft faint pale blue and pale pink watercolor circular halo immediately behind the character; outside the portrait and halo is genuinely transparent. No text, logos, badges, book, library props, hats, animal ears or changed hair color. The avatar is a fan adaptation for a personal game-library administrator; do not add novel costume elements.
